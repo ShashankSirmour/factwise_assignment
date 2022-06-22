@@ -1,0 +1,90 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@utils", "./src/utils"],
+          ["@components", "./src/components"],
+          ["@container", "./src/container"],
+          ["@store", "./src/store"],
+          ["@views", "./src/views"],
+          ["@styles", "./src/styles"],
+          ["@assets", "./src/assets"],
+          ["@hooks", "./src/hooks"],
+          ["@services", "./src/services"],
+          ["@routes", "./src/routes"]
+        ],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+
+    "import/no-extraneous-dependencies": "off",
+    "react/forbid-prop-types": "off",
+    "eslintreact/no-unused-prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/anchor-is-valid": "warn",
+
+    "jsx-a11y/href-no-hash": ["off"],
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "no-debugger": "warn",
+    "react/jsx-filename-extension": ["off", { "extensions": [".js", ".jsx"] }],
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "import/prefer-default-export": "off",
+    "react/require-default-props": "warn",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 80,
+        "tabWidth": 2,
+        "comments": 80,
+        "ignoreComments": false,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ]
+  }
+}

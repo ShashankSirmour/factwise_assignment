@@ -1,11 +1,23 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": ["./src/utils/*"],
+      "@components/*": ["./src/components/*"],
+      "@container/*": ["./src/container/*"],
+      "@store/*": ["./src/store/*"],
+      "@views/*": ["./src/views/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@services/*": ["./src/services/*"],
+      "@routes/*": ["./src/routes/*"]
+    },
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["es6", "dom"],
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,7 +32,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/node_modules/*", "dist", "**/dist/*"]
 }
