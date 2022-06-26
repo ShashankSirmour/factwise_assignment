@@ -17,6 +17,7 @@ module.exports = {
       '@hooks': path.join(path.resolve(__dirname, './src/hooks')),
       '@services': path.join(path.resolve(__dirname, './src/services')),
       '@routes': path.join(path.resolve(__dirname, './src/routes')),
+      '@type': path.join(path.resolve(__dirname, './src/type')),
     },
   },
   jest: {

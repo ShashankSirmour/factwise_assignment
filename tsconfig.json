@@ -11,7 +11,8 @@
       "@assets/*": ["./src/assets/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@services/*": ["./src/services/*"],
-      "@routes/*": ["./src/routes/*"]
+      "@routes/*": ["./src/routes/*"],
+      "@type/*": ["./src/type/*"]
     },
     "target": "es5",
     "lib": ["es6", "dom"],

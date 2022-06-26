@@ -6,6 +6,7 @@
   "extends": [
     "plugin:react/recommended",
     "airbnb",
+    "airbnb-typescript",
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
@@ -15,7 +16,8 @@
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
 
@@ -32,9 +34,10 @@
           ["@assets", "./src/assets"],
           ["@hooks", "./src/hooks"],
           ["@services", "./src/services"],
-          ["@routes", "./src/routes"]
+          ["@routes", "./src/routes"],
+          ["@type", "./src/type"]
         ],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [".ts", ".jsx", ".js", ".tsx"]
       }
     }
   },
@@ -61,7 +64,14 @@
     "no-unused-vars": "warn",
     "no-console": "warn",
     "import/prefer-default-export": "off",
-    "react/require-default-props": "warn",
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": ["arrow-function", "function-declaration"] }
+    ],
+    "react/prop-types": "off", // Since we do not use prop-types
+    "react/require-default-props": "off", // Since we do not use prop-types
+
+    "react/default-props-match-prop-types": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

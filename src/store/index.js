@@ -1,11 +1,11 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable */
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import rootReducer from './rootReducer';
-import rootSaga from './rootSaga';
+import rootReducer from './rootReducer.ts';
+import rootSaga from './rootSaga.ts';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,7 +19,7 @@ const composed = reduxDevTools
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [],
+  blacklist: ['profile'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
