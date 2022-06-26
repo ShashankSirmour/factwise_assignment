@@ -13,6 +13,8 @@ import {
 
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import {
   DeleteOutline,
   EditOutlined,
@@ -89,7 +91,7 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
   return (
     <ProfilesAccordion expanded={expanded} onChange={handleChange}>
       <ProfilesAccordionSummary
-        expandIcon={<ExpandMoreRounded />}
+        expandIcon={expanded ? <RemoveIcon /> : <AddIcon />}
         aria-controls="panel4bh-content"
         id="panel4bh-header"
         style={sx.accordionSummary}
