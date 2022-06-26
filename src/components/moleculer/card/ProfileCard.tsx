@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Avatar, ButtonBase, Grid } from '@mui/material';
 import {
   DeleteConfirmationModel,
@@ -20,7 +20,7 @@ import {
 } from '@mui/icons-material';
 import { ProfileType } from '@type/profile';
 import { useForm, useFormState } from 'react-hook-form';
-import { updateProfileData } from '@store/profile';
+import { deleteProfileData, updateProfileData } from '@store/profile';
 import { useDispatch } from 'react-redux';
 
 const sx = {
@@ -58,6 +58,7 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
   handleEditMode,
 }) => {
   const dispatch = useDispatch();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const {
     control,
     handleSubmit,
@@ -80,6 +81,10 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
     dispatch(updateProfileData({ ...data, ...d }));
     handleEditMode(false);
   };
+
+  const handleDelete = useCallback(() => {
+    dispatch(deleteProfileData(data.id));
+  }, [data.id]);
 
   return (
     <ProfilesAccordion expanded={expanded} onChange={handleChange}>
@@ -183,11 +188,15 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
             <Grid item container justifyContent="flex-end">
               <ButtonBase
                 sx={{ borderRadius: '1000px', p: 0.5 }}
-                onClick={() => console.log('shashank', isDirty)}
+                onClick={() => setOpenDeleteModal(true)}
               >
                 <DeleteOutline sx={{ color: 'red' }} />
               </ButtonBase>
-              <DeleteConfirmationModel open handleClose={() => {}} />
+              <DeleteConfirmationModel
+                open={openDeleteModal}
+                handleDelete={handleDelete}
+                handleClose={() => setOpenDeleteModal(false)}
+              />
               <ButtonBase
                 sx={{ borderRadius: '1000px', p: 0.5 }}
                 onClick={() => handleEditMode(true)}
