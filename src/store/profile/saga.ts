@@ -9,7 +9,6 @@ import { setProfileDataError, setProfileDataSuccess } from './actions';
 function* profilesRequestWorker(): Generator<any> {
   try {
     const response: any = yield call(getAllProfile);
-    console.log('shashank', response);
     // dispatch a success action to the store with logged in response
     const data = response.data.map((d: ProfileType) => ({
       ...d,
