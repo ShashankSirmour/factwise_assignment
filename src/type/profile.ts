@@ -1,6 +1,6 @@
 export type ProfileType = {
   id: number;
-  age: string;
+  age: number;
   dob: string;
   fullName: string;
   first: string;

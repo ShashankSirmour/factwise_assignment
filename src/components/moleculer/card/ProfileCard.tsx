@@ -1,6 +1,8 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 import { Avatar, ButtonBase, Grid } from '@mui/material';
 import {
+  DeleteConfirmationModel,
   EditableNumberField,
   EditableSelectField,
   EditableTextField,
@@ -18,6 +20,8 @@ import {
 } from '@mui/icons-material';
 import { ProfileType } from '@type/profile';
 import { useForm, useFormState } from 'react-hook-form';
+import { updateProfileData } from '@store/profile';
+import { useDispatch } from 'react-redux';
 
 const sx = {
   outlinedInput: {
@@ -53,10 +57,12 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
   handleChange,
   handleEditMode,
 }) => {
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -71,7 +77,8 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
   const { isDirty } = useFormState({ control });
 
   const onSubmit = (d: object) => {
-    console.log(d, errors);
+    dispatch(updateProfileData({ ...data, ...d }));
+    handleEditMode(false);
   };
 
   return (
@@ -94,6 +101,7 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
             <EditableTextField
               fontStyle={sx.headerFont}
               editMode={editMode}
+              error={errors.fullName && true}
               value={data.fullName}
               inputProps={{
                 ...register('fullName', {
@@ -121,6 +129,11 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
                 editMode={editMode}
                 control={control}
                 title="Age"
+                rules={{
+                  require: true,
+                  validate: (d: any) => !isNaN(d),
+                }}
+                error={errors.age && true}
                 value={data.age}
               />
             </Grid>
@@ -129,7 +142,7 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
                 editMode={editMode}
                 options={genderOptions}
                 title="Gender"
-                // error={errors.gender && true}
+                error={errors.gender && true}
                 value={data.gender}
                 inputProps={{
                   ...register('gender', { required: true }),
@@ -141,8 +154,12 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
                 editMode={editMode}
                 title="Country"
                 value={data.country}
+                error={errors.country && true}
                 inputProps={{
-                  ...register('country', { required: true }),
+                  ...register('country', {
+                    required: true,
+                    validate: (d: any) => isNaN(d),
+                  }),
                 }}
               />
             </Grid>
@@ -152,31 +169,17 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
               editMode={editMode}
               title="Discription"
               multiline
+              error={errors.description && true}
               value={data.description}
               inputProps={{
                 ...register('description', {
                   required: true,
-                  validate: (d) => false,
                 }),
               }}
             />
           </Grid>
 
-          <Grid item container justifyContent="flex-end">
-            <ButtonBase
-              sx={{ borderRadius: '1000px', p: 0.5 }}
-              onClick={() => console.log('shashank', isDirty)}
-            >
-              <DeleteOutline />
-            </ButtonBase>
-            <ButtonBase
-              sx={{ borderRadius: '1000px', p: 0.5 }}
-              onClick={handleSubmit(onSubmit)}
-            >
-              <EditOutlined />
-            </ButtonBase>
-          </Grid>
-          {/* {!editMode && (
+          {!editMode && (
             <Grid item container justifyContent="flex-end">
               <ButtonBase
                 sx={{ borderRadius: '1000px', p: 0.5 }}
@@ -184,6 +187,7 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
               >
                 <DeleteOutline sx={{ color: 'red' }} />
               </ButtonBase>
+              <DeleteConfirmationModel open handleClose={() => {}} />
               <ButtonBase
                 sx={{ borderRadius: '1000px', p: 0.5 }}
                 onClick={() => handleEditMode(true)}
@@ -196,13 +200,16 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
             <Grid item container justifyContent="flex-end">
               <ButtonBase
                 sx={{ borderRadius: '1000px', p: 0.5 }}
-                onClick={() => handleEditMode(false)}
+                onClick={() => {
+                  handleEditMode(false);
+                  reset();
+                }}
               >
                 <CancelOutlinedIcon sx={{ color: 'red' }} />
               </ButtonBase>
               <ButtonBase
                 sx={{ borderRadius: '1000px', p: 0.5 }}
-                onClick={() => handleSubmit(onSubmit)()}
+                onClick={handleSubmit(onSubmit)}
                 disabled={!isDirty}
               >
                 <CheckCircleOutlineOutlinedIcon
@@ -210,7 +217,7 @@ const ProfileCard: React.FC<ProfileCardPropsType> = ({
                 />
               </ButtonBase>
             </Grid>
-          )} */}
+          )}
         </Grid>
       </ProfilesAccordionDetails>
     </ProfilesAccordion>

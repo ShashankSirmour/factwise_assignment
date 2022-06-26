@@ -11,6 +11,8 @@ type EditableNumberFieldType = {
   value: string | number;
   name: string;
   control?: any;
+  error?: boolean;
+  rules?: any;
 };
 
 const sx = {
@@ -23,16 +25,23 @@ const sx = {
     mb: 0.4,
   },
 };
-const CustomOutlinedInput = ({
-  fontStyle,
-  ...rest
-}: {
-  fontStyle?: object;
-}) => <OutlinedInput {...rest} sx={sx.outlinedInput} />;
-
+const CustomOutlinedInput = ({ ...rest }) => (
+  <OutlinedInput {...rest} sx={sx.outlinedInput} />
+);
 const EditableNumberField = forwardRef<HTMLDivElement, EditableNumberFieldType>(
   (
-    { title = '', editMode, suffix, fontStyle, control, name, value, ...rest },
+    {
+      title = '',
+      editMode,
+      suffix,
+      fontStyle,
+      control,
+      name,
+      value,
+      error,
+      rules,
+      ...rest
+    },
     ref,
   ) => (
     <Stack direction="column" width="100%">
@@ -41,15 +50,17 @@ const EditableNumberField = forwardRef<HTMLDivElement, EditableNumberFieldType>(
         <Controller
           control={control}
           name={name}
+          rules={rules}
           render={({ field: { onChange, value: val } }) => (
             <NumberFormat
               customInput={CustomOutlinedInput}
               isNumericString
               onValueChange={(v) => {
-                onChange(v.value);
+                onChange(parseInt(v.value, 10));
               }}
-              value={val}
+              value={val || ''}
               suffix={suffix || ''}
+              error={error}
             />
           )}
         />
@@ -68,8 +79,10 @@ EditableNumberField.defaultProps = {
   editMode: false,
   fontStyle: null,
   suffix: '',
-  value: 'null',
+  value: '',
   name: 'age',
+  error: false,
+  rules: {},
 };
 
 export default EditableNumberField;

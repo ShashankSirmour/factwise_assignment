@@ -9,6 +9,7 @@ type EditableTextFieldType = {
   fontStyle?: object | null;
   inputProps?: object;
   value: string;
+  error?: boolean;
 };
 
 const sx = {
@@ -31,6 +32,7 @@ const EditableTextField = forwardRef<HTMLDivElement, EditableTextFieldType>(
       fontStyle,
       inputProps,
       value,
+      error,
       ...rest
     },
     ref,
@@ -39,6 +41,7 @@ const EditableTextField = forwardRef<HTMLDivElement, EditableTextFieldType>(
       {title && <Typography sx={sx.titleText}>{title}</Typography>}
       {editMode && (
         <OutlinedInput
+          error={error}
           onClick={(e) => e.stopPropagation()}
           multiline={multiline}
           defaultValue={value}
@@ -64,6 +67,7 @@ EditableTextField.defaultProps = {
   fontStyle: null,
   inputProps: {},
   value: '',
+  error: false,
 };
 
 export default EditableTextField;

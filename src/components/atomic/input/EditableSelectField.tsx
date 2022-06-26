@@ -13,6 +13,7 @@ type EditableSelectFieldType = {
   value: any;
   options: string[];
   inputProps?: object;
+  error?: boolean;
 };
 
 const sx = {
@@ -26,7 +27,10 @@ const sx = {
 };
 
 const EditableSelectField = forwardRef<HTMLDivElement, EditableSelectFieldType>(
-  ({ title = '', editMode, options, value, inputProps, ...rest }, ref) => (
+  (
+    { title = '', editMode, options, value, inputProps, error, ...rest },
+    ref,
+  ) => (
     <Stack direction="column" spacing={0.5} width="100%">
       {title && <Typography sx={sx.titleText}>{title}</Typography>}
       {editMode && (
@@ -34,9 +38,8 @@ const EditableSelectField = forwardRef<HTMLDivElement, EditableSelectFieldType>(
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           defaultValue={value}
-          // onChange={handleChange}
+          error={error}
           input={<OutlinedInput sx={sx.outlinedInput} />}
-          // MenuProps={MenuProps}
           {...inputProps}
         >
           {options.map((name: string) => (
@@ -50,7 +53,11 @@ const EditableSelectField = forwardRef<HTMLDivElement, EditableSelectFieldType>(
           ))}
         </Select>
       )}
-      {!editMode && <Typography>{value}</Typography>}
+      {!editMode && (
+        <Typography>
+          {value.charAt(0).toUpperCase() + value.slice(1)}
+        </Typography>
+      )}
     </Stack>
   ),
 );
@@ -61,6 +68,7 @@ EditableSelectField.defaultProps = {
   value: null,
   options: [],
   inputProps: {},
+  error: false,
 };
 
 export default EditableSelectField;

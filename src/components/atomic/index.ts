@@ -11,3 +11,5 @@ export {
   ProfilesAccordionDetails,
   ProfilesAccordion,
 } from './accordion/ProfilesAccordion';
+
+export { default as DeleteConfirmationModel } from './popover/DeleteConfirmationModel';

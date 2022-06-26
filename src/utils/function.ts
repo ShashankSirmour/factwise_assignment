@@ -6,5 +6,5 @@ export function getAge(dateString: string) {
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
     age -= 1;
   }
-  return age.toString();
+  return age;
 }
